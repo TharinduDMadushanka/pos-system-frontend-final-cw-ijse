@@ -1,40 +1,126 @@
 import React, { useState } from 'react';
 import './Login.css';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Assuming you're using React Router
 
 const Login = () => {
-  const [isLogin, setIsLogin] = useState(true); // State to track if we are on the login or register form
+  const [isLogin, setIsLogin] = useState(true); // State to toggle login/register form
+  const [formData, setFormData] = useState({ firstName: '', lastName: '', email: '', password: '' }); // State to track form inputs
+  const navigate = useNavigate(); // Hook for navigation
 
   const toggleForm = () => {
     setIsLogin(!isLogin); // Toggle between login and register forms
   };
 
+  // Handle input changes
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData({ ...formData, [id]: value });
+  };
+
+  // Save (register) new user
+  const saveUser = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:8080/user', {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        password: formData.password
+      });
+      console.log('User registered:', response.data);
+      alert('User registered successfully!');
+      setIsLogin(true); // Switch back to login form after registration
+      setFormData({ firstName: '', lastName: '', email: '', password: '' }); // Clear form data
+    } catch (error) {
+      console.error('Error registering user:', error);
+      alert('Registration failed. Please try again.');
+    }
+  };
+
+  // Login existing user
+  const loginUser = async (e) => {
+    e.preventDefault(); // Prevent the default form submission
+    try {
+      const response = await axios.get(`http://localhost:8080/user/${formData.email}`);
+  
+      if (response.status === 200) {
+        const user = response.data;
+        if (user.password === formData.password) { // Check password
+          alert('Login successful');
+          navigate('/dashboard'); // Navigate to dashboard on successful login
+        } else {
+          alert('Incorrect password. Please try again.');
+        }
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        alert('User not found. Please register first.');
+      } else {
+        alert('Login failed. Please try again.');
+      }
+    }
+  };
+
   return (
     <div className='login'>
-      <form>
+      <form onSubmit={isLogin ? loginUser : saveUser}>
         <h2 className='text-center'>{isLogin ? 'Login Form' : 'Register Form'}</h2>
 
         <div data-mdb-input-init className="form-outline mb-4 mt-5">
-          <label className="form-label" htmlFor="form2Example1">Email address</label>
-          <input type="email" id="form2Example1" className="form-control" placeholder='Enter Your Email'/>
+          <label className="form-label" htmlFor="email">Email address</label>
+          <input
+            type="email"
+            id="email"
+            className="form-control"
+            placeholder="Enter Your Email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
         </div>
 
-        {!isLogin && ( // Show the name input fields only in the register form
+        {!isLogin && (
           <>
             <div data-mdb-input-init className="form-outline mb-4">
-              <label className="form-label" htmlFor="form2Example3">First Name</label>
-              <input type="text" id="form2Example3" className="form-control" placeholder='Enter Your First Name'/>
+              <label className="form-label" htmlFor="firstName">First Name</label>
+              <input
+                type="text"
+                id="firstName"
+                className="form-control"
+                placeholder="Enter Your First Name"
+                value={formData.firstName}
+                onChange={handleChange}
+                required
+              />
             </div>
 
             <div data-mdb-input-init className="form-outline mb-4">
-              <label className="form-label" htmlFor="form2Example4">Last Name</label>
-              <input type="text" id="form2Example4" className="form-control" placeholder='Enter Your Last Name'/>
+              <label className="form-label" htmlFor="lastName">Last Name</label>
+              <input
+                type="text"
+                id="lastName"
+                className="form-control"
+                placeholder="Enter Your Last Name"
+                value={formData.lastName}
+                onChange={handleChange}
+                required
+              />
             </div>
           </>
         )}
 
         <div data-mdb-input-init className="form-outline mb-4">
-          <label className="form-label" htmlFor="form2Example2">Password</label>
-          <input type="password" id="form2Example2" className="form-control" placeholder='Password'/>
+          <label className="form-label" htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            className="form-control"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
         </div>
 
         {isLogin && (
@@ -53,21 +139,21 @@ const Login = () => {
         )}
 
         <div className="btn">
-          <button type="button" data-mdb-button-init data-mdb-ripple-init className="btn btn-primary btn-block mb-4">
-            {isLogin ? 'Sign in' : 'Register'}
+          <button type="submit" className="btn btn-primary btn-block mb-4">
+            {isLogin ? 'Login' : 'Register'}
           </button>
         </div>
 
         <div className="text-center reg">
           {isLogin ? (
-            <p>Not a member? <span onClick={toggleForm} style={{ cursor: 'pointer', color: 'hsla(0, 0%, 100%, 0.523)' }}>Register</span></p>
+            <p>Not a member? <span onClick={toggleForm} style={{ cursor: 'pointer', color: 'blue' }}>Register</span></p>
           ) : (
-            <p>Already a member? <span onClick={toggleForm} style={{ cursor: 'pointer', color: 'hsla(0, 0%, 100%, 0.523)' }}>Login</span></p>
+            <p>Already a member? <span onClick={toggleForm} style={{ cursor: 'pointer', color: 'blue' }}>Login</span></p>
           )}
         </div>
       </form>
     </div>
   );
-}
+};
 
 export default Login;
