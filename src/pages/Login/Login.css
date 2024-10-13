@@ -1,39 +1,42 @@
-body, html {
-    height: 100%;
-    margin: 0;
-    padding: 70px 20px;
+.bg-img {
+    height: 100vh;
+    max-width: 100%;
+    background-image: url('../../assets/login-bg.jpg'); /* Path to your background image */
+    background-size: cover;
+    background-position: center;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url(../../assets/login-bg.jpg);
+    position: relative; /* Ensure it occupies full height */
 }
 
-.login{
-    background-color:hsla(0, 0%, 25%, 0.812);
+.login {
+    background-color: hsla(0, 0%, 25%, 0.812);
     padding: 40px 60px;
     width: 400px;
     border-radius: 10px;
+    z-index: 1; /* Ensure the form is above the background */
 }
 
-.btn{
+.btn {
     width: 100px;
     margin-left: 35px;
 }
 
-.forgot{
+.forgot {
     cursor: pointer;
     transition: 0.5s;
 }
 
-.forgot:hover{
+.forgot:hover {
     color: hsla(0, 0%, 100%, 0.523);
     transform: scale(1.05);
 }
 
-.reg span{
+.reg span {
     cursor: pointer;
 }
 
-.reg span:hover{
+.reg span:hover {
     color: hsla(0, 0%, 100%, 0.523);
 }
