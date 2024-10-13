@@ -47,8 +47,9 @@ const Login = () => {
         const user = response.data;
         if (user.password === formData.password) {
           // Navigate to dashboard
-          navigate('/dashboard');
+          
           alert('Login successful');
+          navigate('/dashboard')
         } else {
           alert('Incorrect password. Please try again.');
         }
