@@ -1,0 +1,39 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 70px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url(../../assets/login-bg.jpg);
+}
+
+.login{
+    background-color:hsla(0, 0%, 25%, 0.812);
+    padding: 40px 60px;
+    width: 400px;
+    border-radius: 10px;
+}
+
+.btn{
+    width: 100px;
+    margin-left: 35px;
+}
+
+.forgot{
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.forgot:hover{
+    color: hsla(0, 0%, 100%, 0.523);
+    transform: scale(1.05);
+}
+
+.reg span{
+    cursor: pointer;
+}
+
+.reg span:hover{
+    color: hsla(0, 0%, 100%, 0.523);
+}
