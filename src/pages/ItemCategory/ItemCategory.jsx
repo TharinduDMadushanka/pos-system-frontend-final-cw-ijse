@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Container, Row, Col, Card, Button, Form } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Form, Navbar } from 'react-bootstrap';
 import './ItemCategory.css';
+import { Link, useNavigate } from 'react-router-dom';
 
 const ItemCategory = () => {
   const [categories, setCategories] = useState([]);
@@ -91,73 +92,91 @@ const ItemCategory = () => {
     setEditing(false);
   };
 
+  // const navigate = useNavigate();
+
+  // const navCategory = ()=>{
+  //   navigate('/dashboard')
+  // }
+
   return (
-    <Container fluid className="bg-dark text-light">
-      <Row className="text-center my-4">
-        <Col>
-          <h2>Add Item Category</h2>
-        </Col>
-      </Row>
-      <Row className="mb-4">
-        <Col>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="formName">
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
-            </Form.Group>
+    <div className="category">
+        <Container fluid className="bg-dark text-light">
+            <Row className="text-center my-4">
+                <Col>
+                <h2>Add Item Category</h2>
+                </Col>
+            </Row>
+            <Row className="mb-4 form">
+                <Col>
+                <Form onSubmit={handleSubmit}>
+                    <Form.Group controlId="formName">
+                    <Form.Label>Name</Form.Label>
+                    <Form.Control
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                    />
+                    </Form.Group>
 
-            <Form.Group controlId="formImage" className="mt-3">
-              <Form.Label>Image</Form.Label>
-              <Form.Control
-                type="file"
-                name="image"
-                onChange={handleChange}
-                accept="image/*" // Restrict file types to images
-              />
-              {formData.image && <p className="mt-2">{formData.image.name}</p>} {/* Display image name */}
-            </Form.Group>
+                    <Form.Group controlId="formImage" className="mt-3">
+                    <Form.Label>Image</Form.Label>
+                    <Form.Control
+                        type="file"
+                        name="image"
+                        onChange={handleChange}
+                        accept="image/*" // Restrict file types to images
+                    />
+                    {formData.image && <p className="mt-2">{formData.image.name}</p>} {/* Display image name */}
+                    </Form.Group>
 
-            <Button variant="success" type="submit" className="mt-4">
-              {editing ? 'Update Category' : 'Add Category'}
-            </Button>
-          </Form>
-        </Col>
-      </Row>
-      <Row>
-        {categories.length > 0 ? ( // Conditional rendering for categories
-          categories.map((category) => (
-            <Col key={category.id} md={4} className="mb-4">
-              <Card className="bg-light text-dark">
-                <Card.Img
-                  variant="top"
-                  src={`http://localhost:8080/assets/${category.image}`}
-                  alt={category.name}
-                />
-                <Card.Body>
-                  <Card.Title>{category.name}</Card.Title>
-                  <Button variant="primary" onClick={() => handleEdit(category)}>
-                    Edit
-                  </Button>{' '}
-                  <Button variant="danger" onClick={() => handleDelete(category.id)}>
-                    Delete
-                  </Button>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))
-        ) : (
-          <Col>
-            <p className="text-center">No categories available</p>
-          </Col>
-        )}
-      </Row>
-    </Container>
+                    <Button variant="success" type="submit" className="mt-4">
+                    {editing ? 'Update Category' : 'Add Category'}
+                    </Button>
+                </Form>
+                </Col>
+            </Row>
+            <Row className='card-section'>
+                {categories.length > 0 ? ( // Conditional rendering for categories
+                categories.map((category) => (
+                    <Col key={category.id} md={4} className="mb-4">
+                    <Card className="bg-light text-dark card">
+                        <Card.Img
+                        variant="top"
+                        src={`http://localhost:8080/assets/${category.image}`}
+                        alt={category.name}
+                        />
+                        <Card.Body>
+                        <Card.Title>{category.name}</Card.Title>
+                        <Button variant="primary" onClick={() => handleEdit(category)}>
+                            Edit
+                        </Button>{' '}
+                        <Button variant="danger" onClick={() => handleDelete(category.id)}>
+                            Delete
+                        </Button>
+                        </Card.Body>
+                    </Card>
+                    </Col>
+                ))
+                ) : (
+                <Col>
+                    <p className="text-center">No categories available</p>
+                </Col>
+                )}
+            </Row>
+            </Container>
+
+            <nav aria-label="Page navigation example">
+                <ul className="pagination">
+                    <li className="page-item"><a className="page-link" href="#">Home</a></li>
+                    <li className="page-item"><Link to={'/dashboard'} className="page-link" href="#">Dashboard</Link></li>
+                    <li className="page-item"><a className="page-link" href="#">2</a></li>
+                    <li className="page-item"><a className="page-link" href="#">3</a></li>
+                    <li className="page-item"><a className="page-link" href="#">Next</a></li>
+                </ul>
+            </nav>
+    </div>
   );
 };
 
