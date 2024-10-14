@@ -67,7 +67,7 @@ const Login = () => {
     <div className='bg-img'> {/* Use the bg-img class for styling */}
       <div className='login'>
         <form onSubmit={isLogin ? loginUser : saveUser}>
-          <h2 className='text-center'>{isLogin ? 'Login Form' : 'Register Form'}</h2>
+          <h2 className='text-center title'>{isLogin ? 'Login Form' : 'Register Form'}</h2>
 
           <div data-mdb-input-init className="form-outline mb-4 mt-5">
             <label className="form-label" htmlFor="email">Email address</label>

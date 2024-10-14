@@ -16,6 +16,7 @@
     width: 400px;
     border-radius: 10px;
     z-index: 1; /* Ensure the form is above the background */
+    color: white;
 }
 
 .btn {
