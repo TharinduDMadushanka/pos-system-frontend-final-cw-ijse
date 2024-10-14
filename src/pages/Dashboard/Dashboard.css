@@ -1,13 +1,39 @@
 .dashboard {
-    padding: 20px;
     text-align: center;
-    background-color: black;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    height: 100vh;
     color: white;
+    width: 100%;
   }
 
   .content{
     margin-top: 100px;
   }
   
+  .dashboard img{
+    height: 100vh;
+    width: 100%;
+
+  }
+
+  .cards{
+    background-color: black;
+    padding: 30px 70px;
+    padding-left: 140px;
+    cursor: pointer;
+  }
+
+  .cards .card{
+    background-color: hsla(33, 78%, 91%, 0.356);
+    color: white;
+    border: none;
+  }
+
+  .cards .card:hover{
+    background-color: hsla(34, 47%, 80%, 0.508);
+    border: 3px solid hsla(240, 53%, 54%, 0.812);
+  }
+
+  .cards .card h5{
+    font-size: 30px;
+    font-weight: bold;
+  }
