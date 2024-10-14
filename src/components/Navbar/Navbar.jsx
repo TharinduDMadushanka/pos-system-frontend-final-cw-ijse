@@ -11,15 +11,16 @@ const Navbar = () => {
 
   return (
     <header className="header">
-      <Link to="/" className="logo">Logo</Link>
+      <Link to="/" className="logo">TDM</Link>
 
       <nav className="navbar">
-        <Link to="/">Home</Link>
-        <Link to="/about">About</Link>
-        <Link to="/portfolio">Portfolio</Link>
-        <Link to="/services">Services</Link>
+        <Link to="/dashboard" >Home</Link>
+        <Link to="/categories" >Category</Link>
+        <Link to="">Item</Link>
+        <Link to="">Stock</Link>
+        <Link to="">POS</Link>
         {/* Use onClick only if you want to handle it differently; otherwise, Link is enough */}
-        <Link to="/login" onClick={navLogin}>Login</Link>
+        <Link to="/" onClick={navLogin}>Logout</Link>
       </nav>
     </header>
   );
