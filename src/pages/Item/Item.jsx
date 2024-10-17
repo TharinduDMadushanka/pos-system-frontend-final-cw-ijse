@@ -11,19 +11,16 @@ const Item = () => {
     const [qty, setQty] = useState('');
     const [unitPrice, setUnitPrice] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('');
-    const [editingItemId, setEditingItemId] = useState(null); // For edit mode
-    const [isEditing, setIsEditing] = useState(false); // Toggle between add/update mode
+    const [editingItemId, setEditingItemId] = useState(null);
+    const [isEditing, setIsEditing] = useState(false);
 
-    // Base URL for your API
     const baseURL = 'http://localhost:8080';
 
-    // Fetch items and categories on component load
     useEffect(() => {
         fetchItems();
         fetchCategories();
     }, []);
 
-    // Fetch all items
     const fetchItems = async () => {
         try {
             const response = await axios.get(`${baseURL}/items`);
@@ -33,56 +30,39 @@ const Item = () => {
         }
     };
 
-    // Fetch all categories for dropdown
     const fetchCategories = async () => {
         try {
-            const response = await axios.get(`${baseURL}/categories`);
+            const response = await axios.get('http://localhost:8080/item-categories/all'); // Ensure this endpoint exists
             setCategories(response.data);
         } catch (error) {
             console.error('Error fetching categories', error);
         }
     };
 
-    // Handle form submission (add or update item)
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         const itemData = {
             itemCode,
             itemName,
             description,
-            qty: parseInt(qty), // Ensure qty is an integer
-            unitPrice: parseFloat(unitPrice), // Ensure unitPrice is a number
-            categoryId: selectedCategory // Send category id to backend
+            qty: parseInt(qty),
+            unitPrice: parseFloat(unitPrice),
+            categoryId: selectedCategory
         };
 
         try {
             if (isEditing) {
-                // Update item
                 await axios.put(`${baseURL}/items/${editingItemId}`, itemData);
             } else {
-                // Create new item
                 await axios.post(`${baseURL}/items`, itemData);
             }
-
-            // Reset form
-            setItemCode('');
-            setItemName('');
-            setDescription('');
-            setQty('');
-            setUnitPrice('');
-            setSelectedCategory('');
-            setIsEditing(false);
-            setEditingItemId(null);
-
-            // Refresh item list
-            fetchItems();
+            resetForm();
+            fetchItems(); // Refresh items after submit
         } catch (error) {
             console.error('Error saving item', error);
         }
     };
 
-    // Handle delete
     const handleDelete = async (id) => {
         try {
             await axios.delete(`${baseURL}/items/${id}`);
@@ -92,16 +72,26 @@ const Item = () => {
         }
     };
 
-    // Handle row click (for edit)
     const handleRowClick = (item) => {
         setItemCode(item.itemCode);
         setItemName(item.itemName);
         setDescription(item.description);
         setQty(item.qty);
         setUnitPrice(item.unitPrice);
-        setSelectedCategory(item.category.id); // Set selected category by id
+        setSelectedCategory(item.category.id);
         setIsEditing(true);
         setEditingItemId(item.id);
+    };
+
+    const resetForm = () => {
+        setItemCode('');
+        setItemName('');
+        setDescription('');
+        setQty('');
+        setUnitPrice('');
+        setSelectedCategory('');
+        setIsEditing(false);
+        setEditingItemId(null);
     };
 
     return (
@@ -139,13 +129,17 @@ const Item = () => {
                         <label className="form-label">Category</label>
                         <select className="form-select" value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)} required>
                             <option value="">Select Category</option>
-                            {categories.map(category => (
-                                <option key={category.id} value={category.id}>{category.name}</option>
-                            ))}
+                            {categories.length === 0 ? (
+                                <option disabled>No categories available</option>
+                            ) : (
+                                categories.map(category => (
+                                    <option className='dropdown' key={category.id} value={category.id}>{category.name}</option>
+                                ))
+                            )}
                         </select>
                     </div>
 
-                    <button type="submit" className="btn btn-primary">{isEditing ? 'Update' : 'Save'}</button>
+                    <button type="submit" className="btn btn-primary">{isEditing ? 'Update' : 'Submit'}</button>
                 </form>
             </div>
 

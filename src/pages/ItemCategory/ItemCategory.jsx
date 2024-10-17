@@ -98,6 +98,8 @@ const ItemCategory = () => {
   //   navigate('/dashboard')
   // }
 
+  var index = 1;
+
   return (
     <div className="category">
         <Container fluid className="bg-dark text-light">
@@ -148,7 +150,7 @@ const ItemCategory = () => {
                         alt={category.name}
                         />
                         <Card.Body>
-                        <Card.Title>{category.name}</Card.Title>
+                        <Card.Title>{index++}. {category.name}</Card.Title>
                         <Button variant="primary" onClick={() => handleEdit(category)}>
                             Edit
                         </Button>{' '}
