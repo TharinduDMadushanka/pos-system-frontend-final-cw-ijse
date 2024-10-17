@@ -139,7 +139,7 @@ const Item = () => {
                         </select>
                     </div>
 
-                    <button type="submit" className="btn btn-primary">{isEditing ? 'Update' : 'Submit'}</button>
+                    <button type="submit" className="btn btn-primary">{isEditing ? 'Update' : 'Save'}</button>
                 </form>
             </div>
 
@@ -175,6 +175,7 @@ const Item = () => {
                 </table>
             </div>
         </div>
+        
     );
 };
 
