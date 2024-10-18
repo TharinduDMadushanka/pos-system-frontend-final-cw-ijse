@@ -5,6 +5,7 @@ import Dashboard from './pages/Dashboard/Dashboard'
 import Home from './pages/Home/Home'
 import ItemCategory from './pages/ItemCategory/ItemCategory'
 import Item from './pages/Item/Item'
+import Stock from './pages/Stock/Stock'
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
             <Route path='/dashboard' element={<Dashboard/>}/>
             <Route path='/categories' element={<ItemCategory/>}/>
             <Route path='/item' element={<Item/>}/>
+            <Route path='/stock' element={<Stock/>}/>
           </Routes>
         </BrowserRouter>
     </div>
