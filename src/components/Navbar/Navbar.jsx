@@ -18,7 +18,7 @@ const Navbar = () => {
         <Link to="/categories" >Category</Link>
         <Link to="/item">Item</Link>
         <Link to="/stock">Stock</Link>
-        <Link to="">POS</Link>
+        <Link to="/cart">POS</Link>
         {/* Use onClick only if you want to handle it differently; otherwise, Link is enough */}
         <Link to="/" onClick={navLogin}>Logout</Link>
       </nav>

@@ -1,6 +1,25 @@
 .stock{
-    height: 100vh;
+    height: 100%;
     width: 100%;
     background-color: black;
     color: white;
+}
+
+.table-section{
+    padding: 0;
+    margin-top: 100px;
+    padding: 0 100px;
+    cursor: pointer;
+}
+
+.form-section{
+    margin-top: 100px;
+    margin-left: 100px;
+}
+
+.form-section .btn{
+    width: 130px;
+    margin-left: 450px;
+    margin-top: 20px;
+    
 }

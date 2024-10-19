@@ -58,57 +58,61 @@ const Stock = () => {
       <h1>Stock Management</h1>
 
       {/* Table displaying item details */}
-      <Table striped bordered hover className="mt-3">
-        <thead>
-          <tr>
-            <th>Item Code</th>
-            <th>Item Name</th>
-            <th>Description</th>
-            <th>Quantity</th>
-            <th>Unit Price</th>
-          </tr>
-        </thead>
-        <tbody>
-          {items.map((item) => (
-            <tr key={item.id} onClick={() => handleRowClick(item)}>
-              <td>{item.itemCode}</td>
-              <td>{item.itemName}</td>
-              <td>{item.description}</td>
-              <td>{item.qty}</td>
-              <td>{item.unitPrice}</td>
+      <div className="table-section">
+        <Table striped bordered hover className="mt-3">
+          <thead>
+            <tr>
+              <th>Item Code</th>
+              <th>Item Name</th>
+              <th>Description</th>
+              <th>Quantity</th>
+              <th>Unit Price</th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {items.map((item) => (
+              <tr key={item.id} onClick={() => handleRowClick(item)}>
+                <td>{item.itemCode}</td>
+                <td>{item.itemName}</td>
+                <td>{item.description}</td>
+                <td>{item.qty}</td>
+                <td>{item.unitPrice}</td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </div>
 
       {/* Form to update the stock of the selected item */}
       {selectedItem.id && (
-        <div className="mt-4">
-          <h3>Update Stock for {selectedItem.itemName}</h3>
-          <Form onSubmit={handleUpdateStock}>
-            <Form.Group controlId="itemCode">
-              <Form.Label>Item Code</Form.Label>
-              <Form.Control type="text" value={selectedItem.itemCode} readOnly />
-            </Form.Group>
+        <div className="form-section">
+          <div className="mt-4">
+            <h3>Update Stock for {selectedItem.itemName}</h3>
+            <Form onSubmit={handleUpdateStock}>
+              <Form.Group controlId="itemCode">
+                <Form.Label>Item Code</Form.Label>
+                <Form.Control type="text" value={selectedItem.itemCode} readOnly />
+              </Form.Group>
 
-            <Form.Group controlId="itemName">
-              <Form.Label>Item Name</Form.Label>
-              <Form.Control type="text" value={selectedItem.itemName} readOnly />
-            </Form.Group>
+              <Form.Group controlId="itemName">
+                <Form.Label>Item Name</Form.Label>
+                <Form.Control type="text" value={selectedItem.itemName} readOnly />
+              </Form.Group>
 
-            <Form.Group controlId="quantity">
-              <Form.Label>Add Stock</Form.Label>
-              <Form.Control
-                type="number"
-                
-                onChange={(e) => setQuantity(e.target.value)}
-              />
-            </Form.Group>
+              <Form.Group controlId="quantity">
+                <Form.Label>Add Stock</Form.Label>
+                <Form.Control
+                  type="number"
+                  
+                  onChange={(e) => setQuantity(e.target.value)}
+                />
+              </Form.Group>
 
-            <Button variant="primary" type="submit">
-              Update Stock
-            </Button>
-          </Form>
+              <Button className='btn' variant="primary" type="submit">
+                Update Stock
+              </Button>
+            </Form>
+          </div>
         </div>
       )}
     </div>
